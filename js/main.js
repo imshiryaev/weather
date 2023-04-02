@@ -1,7 +1,17 @@
 import { weatherFetch, cityName, resultFetch } from "./fetch.js";
 import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, listsCity } from "./vars.js";
-
 export { changeDegrees, changeCity };
+
+let favoriteCityList = [];
+
+if (localStorage.getItem('favoriteCity')) {
+	favoriteCityList = JSON.parse(localStorage.getItem('favoriteCity'));
+	console.log(favoriteCityList);
+}
+
+favoriteCityList.forEach(function (city) {
+	render(city);
+});
 
 
 searchInput.addEventListener('keyup', function (event) {
@@ -14,8 +24,6 @@ searchInput.addEventListener('keyup', function (event) {
 	}
 });
 
-
-
 function changeDegrees() {
 	degreesValue.textContent = Math.floor(resultFetch.main.temp);
 
@@ -26,27 +34,25 @@ function changeDegrees() {
 
 
 function changeCity() {
-
 	for (let i = 0; i < cityNameHtml.length; i++) {
 		cityNameHtml[i].textContent = cityName;
 	}
 }
 
-likeHtml.addEventListener('click', addFavoriteCity);
+
 
 function addFavoriteCity() {
-	const cityHtml = `<li class="favoriteCity-item">
-						<span class="favoriteCity-name">${cityName}</span>
-						<div class="buttons">
-							<button type="button" data-action="delete" class="button">
-								<img src="/img/cross.svg" alt="test" width="18" height="18">
-							</button>
-						</div>
-					</li>`;
+	const newFavoriteCity = {
+		id: Date.now(),
+		name: cityName,
+	};
 	if (cityName !== undefined) {
-			favoritelocationLists.insertAdjacentHTML('beforeend', cityHtml);
-
+		favoriteCityList.push(newFavoriteCity);
+		saveToLocalStorage();
+		render(newFavoriteCity);
 	}
+
+
 }
 
 
@@ -54,16 +60,20 @@ function deleteFavoriteCity(event) {
 	let target = event.target;
 	if (target.dataset.action === 'delete') {
 		const parentNode = target.closest('li');
+		const id = +parentNode.id;
+		const index = favoriteCityList.findIndex((index) => index.id === id);
+		favoriteCityList.splice(index, 1);
+		saveToLocalStorage();
 		parentNode.remove();
 	}
 }
 
 
-
 async function selectFavoriteCity(event) {
 	const target = event.target;
-
 	if (target.className === 'favoriteCity-name') {
+		let weatherInfo = document.querySelector('.weather-info__main');
+		weatherInfo.classList.remove('display-none');
 		const serverUrl = 'http://api.openweathermap.org/data/2.5/weather';
 		const apiKey = 'a8f903109391163589af2f4af05130f7';
 		const url = `${serverUrl}?q=${event.target.textContent}&appid=${apiKey}&units=metric`;
@@ -79,9 +89,27 @@ async function selectFavoriteCity(event) {
 			cityNameHtml[i].textContent = event.target.textContent;
 		}
 	}
-
 }
 
 favoritelocationLists.addEventListener('click', deleteFavoriteCity);
-favoritelocationLists.addEventListener('click', selectFavoriteCity)
+favoritelocationLists.addEventListener('click', selectFavoriteCity);
+likeHtml.addEventListener('click', addFavoriteCity);
 
+
+
+function saveToLocalStorage() {
+	localStorage.setItem('favoriteCity', JSON.stringify(favoriteCityList));
+}
+
+
+function render(city) {
+	const cityHtml = `<li id="${city.id}" class="favoriteCity-item">
+	<span class="favoriteCity-name">${city.name}</span>
+	<div class="buttons">
+		<button type="button" data-action="delete" class="button">
+			<img src="/img/cross.svg" alt="test" width="18" height="18">
+		</button>
+	</div>
+</li>`;
+	favoritelocationLists.insertAdjacentHTML('beforeend', cityHtml);
+}
