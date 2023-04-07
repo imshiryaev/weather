@@ -9,6 +9,7 @@ if (localStorage.getItem('favoriteCity')) {
 }
 citySet.forEach((city) => render(city));
 
+
 searchInput.addEventListener('keyup', function (event) {
 	if (event.code === 'Enter' && searchInput.value !== '') {
 		event.preventDefault();
