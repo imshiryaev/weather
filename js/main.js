@@ -2,12 +2,12 @@ import { weatherFetch, cityName, resultFetch, getCityName } from "./fetch.js";
 import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, listsCity } from "./vars.js";
 export { changeDegrees, changeCity };
 
-let mySet = new Set();
+let citySet = new Set();
 
 if (localStorage.getItem('favoriteCity')) {
-	mySet = new Set(JSON.parse(localStorage.getItem('favoriteCity')));
+	citySet = new Set(JSON.parse(localStorage.getItem('favoriteCity')));
 }
-mySet.forEach((city) => render(city));
+citySet.forEach((city) => render(city));
 
 searchInput.addEventListener('keyup', function (event) {
 	if (event.code === 'Enter' && searchInput.value !== '') {
@@ -43,7 +43,7 @@ function addFavoriteCity() {
 	if (cityName !== undefined) {
 		// favoriteCityList.push(newFavoriteCity);
 		const newCity = new City(cityName)
-		mySet.add(newCity);
+		citySet.add(newCity);
 		saveToLocalStorage();
 		render(newCity);
 	}
@@ -54,7 +54,7 @@ function deleteFavoriteCity(event) {
 	if (target.dataset.action === 'delete') {
 		const parentNode = target.closest('li');
 		const id = +parentNode.id;
-		mySet.forEach(city => city.id === id ? mySet.delete(city) : city);
+		citySet.forEach(city => city.id === id ? citySet.delete(city) : city);
 		// const index = favoriteCityList.findIndex((index) => index.id === id);
 		// favoriteCityList.splice(index, 1);
 		saveToLocalStorage();
@@ -76,7 +76,7 @@ favoritelocationLists.addEventListener('click', selectFavoriteCity);
 likeHtml.addEventListener('click', addFavoriteCity);
 
 function saveToLocalStorage() {
-	localStorage.setItem('favoriteCity', JSON.stringify([...mySet]));
+	localStorage.setItem('favoriteCity', JSON.stringify([...citySet]));
 }
 
 function render(city) {
