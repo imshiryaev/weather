@@ -2,21 +2,18 @@ import { weatherFetch, cityName, resultFetch, getCityName } from "./fetch.js";
 import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, listsCity } from "./vars.js";
 export { changeDegrees, changeCity };
 
-let favoriteCityList = [];
+let mySet = new Set();
 
 if (localStorage.getItem('favoriteCity')) {
-	favoriteCityList = JSON.parse(localStorage.getItem('favoriteCity'));
+	mySet = new Set(JSON.parse(localStorage.getItem('favoriteCity')));
 }
-
-favoriteCityList.forEach(function (city) {
-	render(city);
-});
+mySet.forEach((city) => render(city));
 
 searchInput.addEventListener('keyup', function (event) {
 	if (event.code === 'Enter' && searchInput.value !== '') {
 		event.preventDefault();
-		getCityName()
-		weatherFetch(cityName);		
+		getCityName();
+		weatherFetch(cityName);
 		let weatherInfo = document.querySelector('.weather-info__main');
 		weatherInfo.classList.remove('display-none');
 	}
@@ -37,14 +34,18 @@ function changeCity(cityName) {
 }
 
 function addFavoriteCity() {
-	const newFavoriteCity = {
-		id: Date.now(),
-		name: cityName,
-	};
+
+	function City(cityName) {
+		this.id = Date.now(),
+		this.name = cityName
+	}
+
 	if (cityName !== undefined) {
-		favoriteCityList.push(newFavoriteCity);
+		// favoriteCityList.push(newFavoriteCity);
+		const newCity = new City(cityName)
+		mySet.add(newCity);
 		saveToLocalStorage();
-		render(newFavoriteCity);
+		render(newCity);
 	}
 }
 
@@ -53,8 +54,9 @@ function deleteFavoriteCity(event) {
 	if (target.dataset.action === 'delete') {
 		const parentNode = target.closest('li');
 		const id = +parentNode.id;
-		const index = favoriteCityList.findIndex((index) => index.id === id);
-		favoriteCityList.splice(index, 1);
+		mySet.forEach(city => city.id === id ? mySet.delete(city) : city);
+		// const index = favoriteCityList.findIndex((index) => index.id === id);
+		// favoriteCityList.splice(index, 1);
 		saveToLocalStorage();
 		parentNode.remove();
 	}
@@ -65,7 +67,7 @@ function selectFavoriteCity(event) {
 	if (target.className === 'favoriteCity-name') {
 		let weatherInfo = document.querySelector('.weather-info__main');
 		weatherInfo.classList.remove('display-none');
-		weatherFetch(event.target.textContent)
+		weatherFetch(event.target.textContent);
 	}
 }
 
@@ -74,7 +76,7 @@ favoritelocationLists.addEventListener('click', selectFavoriteCity);
 likeHtml.addEventListener('click', addFavoriteCity);
 
 function saveToLocalStorage() {
-	localStorage.setItem('favoriteCity', JSON.stringify(favoriteCityList));
+	localStorage.setItem('favoriteCity', JSON.stringify([...mySet]));
 }
 
 function render(city) {
