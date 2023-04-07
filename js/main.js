@@ -1,5 +1,5 @@
-import { weatherFetch, cityName, resultFetch, getCityName } from "./fetch.js";
-import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, listsCity } from "./vars.js";
+import { weatherFetch, cityName, getCityName } from "./fetch.js";
+import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists } from "./vars.js";
 export { changeDegrees, changeCity };
 
 let citySet = new Set();
@@ -8,7 +8,6 @@ if (localStorage.getItem('favoriteCity')) {
 	citySet = new Set(JSON.parse(localStorage.getItem('favoriteCity')));
 }
 citySet.forEach((city) => render(city));
-
 
 searchInput.addEventListener('keyup', function (event) {
 	if (event.code === 'Enter' && searchInput.value !== '') {

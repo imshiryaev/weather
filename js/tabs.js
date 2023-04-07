@@ -1,7 +1,6 @@
 const tabs = document.querySelectorAll('.tab');
 const contents = document.querySelectorAll('.weather-info');
 
-
 for (let i = 0; i < tabs.length; i++) {
 	tabs[i].addEventListener('click', (event) => {
 		for (let i = 0; i < tabs.length; i++) {
