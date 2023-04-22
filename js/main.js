@@ -1,13 +1,13 @@
 import { weatherFetch, cityName, getCityName } from "./fetch.js";
-import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists } from "./vars.js";
-export { changeDegrees, changeCity };
+import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, weatherDegree, weatherFeels, weatherWeather, weatherSunrise, weatherSunset } from "./vars.js";
+export { changeDetails, changeCity };
 
 let citySet = new Set();
 
 if (localStorage.getItem('favoriteCity')) {
 	citySet = new Set(JSON.parse(localStorage.getItem('favoriteCity')));
 }
-citySet.forEach((city) => render(city));
+citySet.forEach((newCity) => render(newCity));
 
 searchInput.addEventListener('keyup', function (event) {
 	if (event.code === 'Enter' && searchInput.value !== '') {
@@ -19,11 +19,24 @@ searchInput.addEventListener('keyup', function (event) {
 	}
 });
 
-function changeDegrees(resultFetch) {
-	degreesValue.textContent = Math.floor(resultFetch.main.temp);
+function changeDetails(resultFetch) {
+	degreesValue.textContent = `${Math.floor(resultFetch.main.temp)}`;
 	degreesValue.insertAdjacentHTML('beforeend', '<span>&deg;</span>');
 	const degreesResult = degreesValue.textContent;
 	weatherDegreeHtml.textContent = degreesResult;
+
+	weatherFeels.textContent = resultFetch.main.feels_like;
+	weatherWeather.textContent = resultFetch.weather[0].main;
+
+	const unixSunrise = resultFetch.sys.sunrise;
+	const sunrise = new Date((unixSunrise) * 1000);
+	const sunriseTime = sunrise.getUTCHours() + ':' + sunrise.getUTCMinutes();
+
+	const unixSunset = resultFetch.sys.sunset;
+	const sunset = new Date((unixSunset) * 1000);
+	const sunsetTime = sunset.getUTCHours() + ':' + sunset.getUTCMinutes();
+	weatherSunrise.textContent = sunriseTime;
+	weatherSunset.textContent = sunsetTime;
 }
 
 function changeCity(cityName) {
@@ -37,12 +50,12 @@ function addFavoriteCity() {
 
 	function City(cityName) {
 		this.id = Date.now(),
-		this.name = cityName
+		this.name = cityName;
 	}
 
 	if (cityName !== undefined) {
 		// favoriteCityList.push(newFavoriteCity);
-		const newCity = new City(cityName)
+		const newCity = new City(cityName);
 		citySet.add(newCity);
 		saveToLocalStorage();
 		render(newCity);
@@ -54,7 +67,7 @@ function deleteFavoriteCity(event) {
 	if (target.dataset.action === 'delete') {
 		const parentNode = target.closest('li');
 		const id = +parentNode.id;
-		citySet.forEach(city => city.id === id ? citySet.delete(city) : city);
+		citySet.forEach(newCity => newCity.id === id ? citySet.delete(newCity) : newCity);
 		// const index = favoriteCityList.findIndex((index) => index.id === id);
 		// favoriteCityList.splice(index, 1);
 		saveToLocalStorage();
@@ -79,9 +92,9 @@ function saveToLocalStorage() {
 	localStorage.setItem('favoriteCity', JSON.stringify([...citySet]));
 }
 
-function render(city) {
-	const cityHtml = `<li id="${city.id}" class="favoriteCity-item">
-	<span class="favoriteCity-name">${city.name}</span>
+function render(newCity) {
+	const cityHtml = `<li id="${newCity.id}" class="favoriteCity-item">
+	<span class="favoriteCity-name">${newCity.name}</span>
 	<div class="buttons">
 		<button type="button" data-action="delete" class="button">
 			<img src="/img/cross.svg" alt="test" width="18" height="18">

@@ -24,8 +24,8 @@
 			<div class="content">
 				<div class="weather-content display-flex ">
 					<div class="weather-info__main display-none" id="weather-info__main">
-						<div class="weather-info x content--active weather-info_page1 ">
-							<h1 class="weather-info1__title" id="weather-info1__title">0<span>&deg;</span></h1>
+						<div class="weather-info weather-info_page1 ">
+							<h1 class="weather-info1__title" id="weather-info1__title"></h1>
 							<img class="img" src="img/icons8-cloud-96 1.svg" alt="img">
 							<div class="weather-info1__footer">
 								<h1 class="city-name"></h1>
@@ -37,10 +37,10 @@
 
 							<div class="weather-container">
 								<p class="weather">Temperature: <span id="weather-degree">14</span></p>
-								<p class="weather">Feels like: <span>10</span></p>
-								<p class="weather">Weather: <span>Clouds</span></p>
-								<p class="weather">Sunrise: <span>03:21</span></p>
-								<p class="weather">Sunset: <span>18:54</span></p>
+								<p class="weather">Feels like: <span id="weather-feels">10</span></p>
+								<p class="weather">Weather: <span id="weather-weather">Clouds</span></p>
+								<p class="weather">Sunrise: <span id="weather-sunrise">03:21</span></p>
+								<p class="weather">Sunset: <span id="weather-sunset">18:54</span></p>
 							</div>
 
 						</div>
@@ -50,7 +50,7 @@
 
 						<div class="tab tab--active">Now</div>
 						<div class="tab">Details</div>
-						<div class="tab">Forecast</div>
+						<!-- <div class="tab">Forecast</div> -->
 
 					</div>
 				</div>
@@ -59,21 +59,6 @@
 						<h1 class="added-location-title">Favorite Locations:</h1>
 					</div>
 					<ul class="added-location-lists" id="favorite-location-lists">
-						<!-- <li class="favoriteCity-item">
-							<span class="favoriteCity-name">Moscow</span>
-							<div class="buttons">
-								<button type="button" data-action="delete" class="button">
-									<img src="/img/cross.svg" alt="test" width="18" height="18">
-								</button>
-							</div>
-						</li>						<li class="favoriteCity-item">
-							<span class="favoriteCity-name">Kursk</span>
-							<div class="buttons">
-								<button type="button" data-action="delete" class="button">
-									<img src="/img/cross.svg" alt="test" width="18" height="18">
-								</button>
-							</div>
-						</li> -->
 					</ul>
 				</div>
 			</div>
