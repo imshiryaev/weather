@@ -97,13 +97,30 @@ function saveToLocalStorage() {
 }
 
 function render(newCity) {
-	const cityHtml = `<li id="${newCity.id}" class="favoriteCity-item">
-	<span class="favoriteCity-name">${newCity.name}</span>
-	<div class="buttons">
-		<button type="button" data-action="delete" class="button">
-			<img src="/img/cross.svg" alt="test" width="18" height="18">
-		</button>
-	</div>
-</li>`;
-	favoritelocationLists.insertAdjacentHTML('beforeend', cityHtml);
+	createElement(newCity)
+}
+
+function createElement(newCity) {
+	const li = document.createElement('li')
+	li.id = newCity.id
+	li.classList.add('favoriteCity-item')
+	favoritelocationLists.append(li)
+
+	const span = document.createElement('span')
+	span.classList.add('favoriteCity-name')
+	span.textContent = newCity.name
+	li.append(span)
+
+	const button = document.createElement('button')
+	button.type = 'button'
+	button.setAttribute('data-action', 'delete')
+	button.classList.add('button')
+	li.append(button)
+
+	const img = document.createElement('img')
+	img.src = '/img/cross.svg'
+	img.alt = 'delete'
+	img.width = '18'
+	img.height = '18'
+	button.append(img)
 }
