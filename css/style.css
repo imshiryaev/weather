@@ -203,7 +203,7 @@ body {
   border-right: 1px solid;
   border: none;
   width: 100%;
-  height: inherit;
+  max-height: 44px;
   cursor: pointer;
   text-align: center;
   padding-top: 10px;
@@ -278,4 +278,8 @@ body {
   padding-top: 10px;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.city-name_page2 {
+  margin-left: 15px;
 }

@@ -210,7 +210,7 @@ body {
 	border: none;
 
 	width: 100%;
-	height: inherit;
+	max-height: 44px;
 	cursor: pointer;
 	text-align: center;
 	padding-top: 10px;
@@ -290,4 +290,5 @@ body {
 }
 
 .city-name_page2 {
+	margin-left: 15px;
 }
