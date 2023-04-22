@@ -29,11 +29,11 @@ function changeDetails(resultFetch) {
 	weatherWeather.textContent = resultFetch.weather[0].main;
 
 	const unixSunrise = resultFetch.sys.sunrise;
-	const sunrise = new Date((unixSunrise) * 1000);
+	const sunrise = new Date((unixSunrise + resultFetch.timezone) * 1000);
 	const sunriseTime = sunrise.getUTCHours() + ':' + sunrise.getUTCMinutes();
 
 	const unixSunset = resultFetch.sys.sunset;
-	const sunset = new Date((unixSunset) * 1000);
+	const sunset = new Date((unixSunset + resultFetch.timezone) * 1000);
 	const sunsetTime = sunset.getUTCHours() + ':' + sunset.getUTCMinutes();
 	weatherSunrise.textContent = sunriseTime;
 	weatherSunset.textContent = sunsetTime;
@@ -86,7 +86,11 @@ function selectFavoriteCity(event) {
 
 favoritelocationLists.addEventListener('click', deleteFavoriteCity);
 favoritelocationLists.addEventListener('click', selectFavoriteCity);
-likeHtml.addEventListener('click', addFavoriteCity);
+
+if (document.querySelector('#like')) {
+	likeHtml.addEventListener('click', addFavoriteCity);
+}
+
 
 function saveToLocalStorage() {
 	localStorage.setItem('favoriteCity', JSON.stringify([...citySet]));
