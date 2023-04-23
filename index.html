@@ -2,74 +2,74 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
-		rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
 
 
-	<title>Погода</title>
+    <title>Погода</title>
 </head>
 
 <body>
-	<div class="container">
-		<div class="main-content">
-			<div class="search">
-				<input type="text" name="" id="search-input" placeholder="Moscow" class="search-input">
-			</div>
-			<div class="content">
-				<div class="weather-content display-flex ">
-					<div class="weather-info__main display-none" id="weather-info__main">
-						<div class="weather-info weather-info_page1 content--active">
-							<div class="weather-info--container">
-								<h1 class="weather-info1__title" id="weather-info1__title"></h1>
-								<img class="img" src="img/icons8-cloud-96 1.svg" alt="img">
-								<div class="weather-info1__footer">
-									<h1 class="city-name"></h1>
-									<img class="like" id="like" src="img/Shape.svg" alt="">
-								</div>
-							</div>
-						</div>
-						<div class="weather-info ">
-							<h1 class="city-name city-name_page2"></h1>
+    <div class="container">
+        <div class="main-content">
+            <div class="search">
+                <input type="text" name="" id="search-input" placeholder="Moscow" class="search-input">
+            </div>
+            <div class="content">
+                <div class="weather-content display-flex ">
+                    <div class="weather-info__main display-none" id="weather-info__main">
+                        <div class="weather-info weather-info_page1 content--active">
+                            <div class="weather-info--container">
+                                <h1 class="weather-info1__title" id="weather-info1__title"></h1>
+                                <img class="img" src="img/icons8-cloud-96 1.svg" alt="img">
+                                <div class="weather-info1__footer">
+                                    <h1 class="city-name"></h1>
+                                    <img class="like" id="like" src="img/Shape.svg" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weather-info ">
+                            <h1 class="city-name city-name_page2"></h1>
 
-							<div class="weather-container">
-								<p class="weather">Temperature: <span id="weather-degree">14</span></p>
-								<p class="weather">Feels like: <span id="weather-feels">10</span></p>
-								<p class="weather">Weather: <span id="weather-weather">Clouds</span></p>
-								<p class="weather">Sunrise: <span id="weather-sunrise">03:21</span></p>
-								<p class="weather">Sunset: <span id="weather-sunset">18:54</span></p>
-							</div>
+                            <div class="weather-container">
+                                <p class="weather">Temperature: <span id="weather-degree">14</span></p>
+                                <p class="weather">Feels like: <span id="weather-feels">10</span></p>
+                                <p class="weather">Weather: <span id="weather-weather">Clouds</span></p>
+                                <p class="weather">Sunrise: <span id="weather-sunrise">03:21</span></p>
+                                <p class="weather">Sunset: <span id="weather-sunset">18:54</span></p>
+                            </div>
 
-						</div>
-						<div class="weather-info"></div>
-					</div>
-					<div class="weather-tabs">
+                        </div>
+                        <div class="weather-info"></div>
+                    </div>
+                    <div class="weather-tabs">
 
-						<div class="tab tab--active">Now</div>
-						<div class="tab">Details</div>
-						<!-- <div class="tab">Forecast</div> -->
+                        <div class="tab tab--active">Now</div>
+                        <div class="tab">Details</div>
+                        <!-- <div class="tab">Forecast</div> -->
 
-					</div>
-				</div>
-				<div class="added-location-content">
-					<div class="added-location-content_title">
-						<h1 class="added-location-title">Favorite Locations:</h1>
-					</div>
-					<ul class="added-location-lists" id="favorite-location-lists">
-					</ul>
-				</div>
-			</div>
+                    </div>
+                </div>
+                <div class="added-location-content">
+                    <div class="added-location-content_title">
+                        <h1 class="added-location-title">Favorite Locations:</h1>
+                    </div>
+                    <ul class="added-location-lists" id="favorite-location-lists">
+                    </ul>
+                </div>
+            </div>
 
-		</div>
-	</div>
+        </div>
+    </div>
 
-	<script src="/js/main.js" type="module"></script>
-	<script src="js/tabs.js"></script>
+    <script src="/js/main.js" type="module"></script>
+    <script src="js/tabs.js"></script>
 </body>
 
 </html>
