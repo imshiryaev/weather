@@ -1,5 +1,5 @@
 import { weatherFetch, cityName, getCityName } from "./fetch.js";
-import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, weatherDegree, weatherFeels, weatherWeather, weatherSunrise, weatherSunset } from "./vars.js";
+import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, weatherDegree, weatherFeels, weatherWeather, weatherSunrise, weatherSunset, weatherInfo } from "./vars.js";
 export { changeDetails, changeCity };
 
 let citySet = new Set();
@@ -7,6 +7,19 @@ let citySet = new Set();
 if (localStorage.getItem('favoriteCity')) {
 	citySet = new Set(JSON.parse(localStorage.getItem('favoriteCity')));
 }
+
+const currentCity = localStorage.getItem('getCurrentCity');
+
+
+function checkLocalStorage() {
+	if (localStorage.getItem('getCurrentCity') !== null) {
+		weatherFetch(currentCity)
+		weatherInfo.classList.remove('display-none');
+	}
+}
+
+checkLocalStorage()
+
 citySet.forEach((newCity) => render(newCity));
 
 searchInput.addEventListener('keyup', function (event) {
@@ -14,7 +27,6 @@ searchInput.addEventListener('keyup', function (event) {
 		event.preventDefault();
 		getCityName();
 		weatherFetch(cityName);
-		let weatherInfo = document.querySelector('.weather-info__main');
 		weatherInfo.classList.remove('display-none');
 	}
 });
@@ -50,7 +62,7 @@ function addFavoriteCity() {
 
 	function City(cityName) {
 		this.id = Date.now(),
-		this.name = cityName;
+			this.name = cityName;
 	}
 
 	if (cityName !== undefined) {
@@ -72,6 +84,10 @@ function deleteFavoriteCity(event) {
 		// favoriteCityList.splice(index, 1);
 		saveToLocalStorage();
 		parentNode.remove();
+	
+		if (parentNode.firstChild.textContent === currentCity) {
+			localStorage.removeItem('getCurrentCity')
+		}
 	}
 }
 
@@ -81,6 +97,7 @@ function selectFavoriteCity(event) {
 		let weatherInfo = document.querySelector('.weather-info__main');
 		weatherInfo.classList.remove('display-none');
 		weatherFetch(event.target.textContent);
+		localStorage.setItem('getCurrentCity', event.target.textContent);
 	}
 }
 
@@ -91,36 +108,35 @@ if (document.querySelector('#like')) {
 	likeHtml.addEventListener('click', addFavoriteCity);
 }
 
-
 function saveToLocalStorage() {
 	localStorage.setItem('favoriteCity', JSON.stringify([...citySet]));
 }
 
 function render(newCity) {
-	createElement(newCity)
+	createElement(newCity);
 }
 
 function createElement(newCity) {
-	const li = document.createElement('li')
-	li.id = newCity.id
-	li.classList.add('favoriteCity-item')
-	favoritelocationLists.append(li)
+	const li = document.createElement('li');
+	li.id = newCity.id;
+	li.classList.add('favoriteCity-item');
+	favoritelocationLists.append(li);
 
-	const span = document.createElement('span')
-	span.classList.add('favoriteCity-name')
-	span.textContent = newCity.name
-	li.append(span)
+	const span = document.createElement('span');
+	span.classList.add('favoriteCity-name');
+	span.textContent = newCity.name;
+	li.append(span);
 
-	const button = document.createElement('button')
-	button.type = 'button'
-	button.setAttribute('data-action', 'delete')
-	button.classList.add('button')
-	li.append(button)
+	const button = document.createElement('button');
+	button.type = 'button';
+	button.setAttribute('data-action', 'delete');
+	button.classList.add('button');
+	li.append(button);
 
-	const img = document.createElement('img')
-	img.src = '/img/cross.svg'
-	img.alt = 'delete'
-	img.width = '18'
-	img.height = '18'
-	button.append(img)
+	const img = document.createElement('img');
+	img.src = '/img/cross.svg';
+	img.alt = 'delete';
+	img.width = '18';
+	img.height = '18';
+	button.append(img);
 }
