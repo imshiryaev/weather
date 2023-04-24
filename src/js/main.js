@@ -33,10 +33,17 @@ searchInput.addEventListener('keyup', function (event) {
     if (event.code === 'Enter' && searchInput.value !== '') {
         event.preventDefault();
         getCityName();
+        clearInput()
         weatherFetch(cityName);
         weatherInfo.classList.remove('display-none');
     }
 });
+
+function clearInput() {
+    searchInput.value = ''
+    searchInput.focus()
+
+}
 
 function changeDetails(data) {
     degreesValue.textContent = `${Math.floor(data.main.temp)}`;

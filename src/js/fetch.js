@@ -1,5 +1,5 @@
 import { changeCity, changeDetails } from "./main.js";
-import { searchInput} from "./vars.js";
+import { searchInput } from "./vars.js";
 export { weatherFetch, cityName, data, getCityName };
 
 let data;
@@ -17,6 +17,7 @@ async function weatherFetch(cityName) {
 
     const sendFetch = await fetch(url);
     data = await sendFetch.json();
+
 
     changeDetails(data);
     changeCity(cityName);
