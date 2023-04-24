@@ -1,4 +1,4 @@
-export {searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, listsCity, weatherDegree, weatherFeels, weatherWeather, weatherSunrise, weatherSunset}
+export {searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, listsCity, weatherDegree, weatherFeels, weatherWeather, weatherSunrise, weatherSunset, weatherInfo}
 
 const searchInput = document.getElementById('search-input')
 const degreesValue = document.getElementById('weather-info1__title')
@@ -12,3 +12,4 @@ const weatherFeels = document.getElementById('weather-feels')
 const weatherWeather = document.getElementById('weather-weather')
 const weatherSunrise = document.getElementById('weather-sunrise')
 const weatherSunset = document.getElementById('weather-sunset')
+const weatherInfo = document.querySelector('.weather-info__main');
