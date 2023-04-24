@@ -1,15 +1,17 @@
-import { weatherFetch, cityName, getCityName } from "./fetch.js";
-import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, weatherDegree, weatherFeels, weatherWeather, weatherSunrise, weatherSunset, weatherInfo } from "./vars.js";
+import { format } from "date-fns";
+import { cityName, getCityName, weatherFetch } from "/src/js/fetch.js";
+import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, weatherFeels, weatherWeather, weatherSunrise, weatherSunset, weatherInfo } from "/src/js/vars.js";
 export { changeDetails, changeCity };
+
 
 let citySet = new Set();
 
 if (localStorage.getItem('favoriteCity')) {
     citySet = new Set(JSON.parse(localStorage.getItem('favoriteCity')));
+
 }
 
 const currentCity = localStorage.getItem('getCurrentCity');
-
 
 function checkLocalStorage() {
     if (localStorage.getItem('getCurrentCity') !== null) {
@@ -18,9 +20,12 @@ function checkLocalStorage() {
     }
 }
 
+window.onload = function onLoad() {
+    citySet.forEach((newCity) => render(newCity));
+}
+
 checkLocalStorage();
 
-citySet.forEach((newCity) => render(newCity));
 
 searchInput.addEventListener('keyup', function (event) {
     if (event.code === 'Enter' && searchInput.value !== '') {
@@ -40,13 +45,15 @@ function changeDetails(resultFetch) {
     weatherFeels.textContent = resultFetch.main.feels_like;
     weatherWeather.textContent = resultFetch.weather[0].main;
 
+
     const unixSunrise = resultFetch.sys.sunrise;
     const sunrise = new Date((unixSunrise + resultFetch.timezone) * 1000);
-    const sunriseTime = sunrise.getUTCHours() + ':' + sunrise.getUTCMinutes();
+    console.log(sunrise)
+    const sunriseTime = format(sunrise, 'HH:mm',);
 
     const unixSunset = resultFetch.sys.sunset;
     const sunset = new Date((unixSunset + resultFetch.timezone) * 1000);
-    const sunsetTime = sunset.getUTCHours() + ':' + sunset.getUTCMinutes();
+    const sunsetTime = format(sunset, 'HH:mm',);
     weatherSunrise.textContent = sunriseTime;
     weatherSunset.textContent = sunsetTime;
 }
@@ -63,7 +70,7 @@ function changeCity(cityName) {
             setCityName(i + 1);
         }
     }
-    setCityName(0)
+    setCityName(0);
 }
 
 function addFavoriteCity() {
@@ -122,6 +129,7 @@ function saveToLocalStorage() {
 
 function render(newCity) {
     createElement(newCity);
+
 }
 
 function createElement(newCity) {
@@ -142,9 +150,10 @@ function createElement(newCity) {
     li.append(button);
 
     const img = document.createElement('img');
-    img.src = '/img/cross.svg';
+
     img.alt = 'delete';
     img.width = '18';
     img.height = '18';
+    img.src = new URL('/src/img/delete.svg', import.meta.url);
     button.append(img);
 }
