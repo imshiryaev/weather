@@ -13,12 +13,12 @@ const currentCity = localStorage.getItem('getCurrentCity');
 
 function checkLocalStorage() {
     if (localStorage.getItem('getCurrentCity') !== null) {
-        weatherFetch(currentCity)
+        weatherFetch(currentCity);
         weatherInfo.classList.remove('display-none');
     }
 }
 
-checkLocalStorage()
+checkLocalStorage();
 
 citySet.forEach((newCity) => render(newCity));
 
@@ -52,10 +52,18 @@ function changeDetails(resultFetch) {
 }
 
 function changeCity(cityName) {
-
-    for (let i = 0; i < cityNameHtml.length; i++) {
-        cityNameHtml[i].textContent = cityName;
+    // for (let i = 0; i < cityNameHtml.length; i++) {
+    //     cityNameHtml[i].textContent = cityName;
+    // }
+    function setCityName(i) {
+        if (i >= cityNameHtml.length) {
+            return;
+        } else {
+            cityNameHtml[i].textContent = cityName;
+            setCityName(i + 1);
+        }
     }
+    setCityName(0)
 }
 
 function addFavoriteCity() {
@@ -84,9 +92,9 @@ function deleteFavoriteCity(event) {
         // favoriteCityList.splice(index, 1);
         saveToLocalStorage();
         parentNode.remove();
-    
+
         if (parentNode.firstChild.textContent === currentCity) {
-            localStorage.removeItem('getCurrentCity')
+            localStorage.removeItem('getCurrentCity');
         }
     }
 }
