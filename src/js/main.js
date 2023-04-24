@@ -33,15 +33,15 @@ searchInput.addEventListener('keyup', function (event) {
     if (event.code === 'Enter' && searchInput.value !== '') {
         event.preventDefault();
         getCityName();
-        clearInput()
+        clearInput();
         weatherFetch(cityName);
         weatherInfo.classList.remove('display-none');
     }
 });
 
 function clearInput() {
-    searchInput.value = ''
-    searchInput.focus()
+    searchInput.value = '';
+    searchInput.focus();
 
 }
 
@@ -55,10 +55,10 @@ function changeDetails(data) {
     weatherWeather.textContent = data.weather[0].main;
 
 
-    const unixSunrise = ((data.sys.sunrise + data.timezone) * 1000)
+    const unixSunrise = ((data.sys.sunrise + data.timezone) * 1000);
     const sunriseTime = format(utcToZonedTime(new Date(unixSunrise)), 'HH:mm',);
 
-    const unixSunset = ((data.sys.sunset + data.timezone) * 1000)
+    const unixSunset = ((data.sys.sunset + data.timezone) * 1000);
     const sunsetTime = format(utcToZonedTime(new Date(unixSunset)), 'HH:mm',);
 
 
