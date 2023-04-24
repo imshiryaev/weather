@@ -2,14 +2,21 @@
   "name": "weather",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "source": "src/index.html",
+  "targets": {
+    "default": {
+      "distDir": "./build"
+    }
+  },
   "scripts": {
-    "start": "parcel src/index.html"
+    "start": "parcel",
+    "build": "parcel build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.8.3",
     "eslint": "^8.39.0",
     "parcel": "^2.8.3"
   },

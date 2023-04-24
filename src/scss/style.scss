@@ -80,7 +80,7 @@ select {
 /////////////////////////////////////////////////
 
 body {
-    font-family: Roboto;
+    font-family: montserrat;
 }
 
 .container {
@@ -95,7 +95,7 @@ body {
     width: 601px;
     height: 436px;
     border: 1px solid;
-    // display: none;
+    border-radius: 10px;
 }
 
 .search {
@@ -140,7 +140,6 @@ body {
 
 .weather-info1__title {
     height: 82px;
-    font-family: Roboto;
     font-style: normal;
     font-weight: 400;
     font-size: 70px;
@@ -164,7 +163,6 @@ body {
 }
 
 .added-location-lists__city-name {
-    font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
@@ -183,7 +181,6 @@ body {
 }
 
 .weather {
-    font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
@@ -203,7 +200,6 @@ body {
 }
 
 .weather-tabs {
-    position: relative;
     display: flex;
     height: 45px;
     justify-content: space-around;
@@ -220,15 +216,19 @@ body {
     cursor: pointer;
     text-align: center;
     padding-top: 10px;
-}
 
-.tab:hover {
-    background-color: black;
-    color: white;
+    &:hover {
+        background-color: black;
+        color: white;
+    }
+
+    &:hover:first-child {
+        border-radius: 0 0 0 10px;
+    }
 }
 
 .tab:last-child {
-    border-right: none;
+    // border-right: none;
 }
 
 .added-location-content {
@@ -246,16 +246,30 @@ body {
     height: 320px;
 }
 
+.added-location-lists::-webkit-scrollbar {
+    width: 12px;
+}
+.added-location-lists::-webkit-scrollbar-track {
+    background-color: #eeeeee;
+    border-radius: 10px;
+}
+
+.added-location-lists::-webkit-scrollbar-thumb {
+    background-color: #d0d0d0;
+    border-radius: 10px;
+}
+
+
 .favoriteCity-name {
-    font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
     line-height: 28px;
+    cursor: pointer;
 }
 
 .button {
-    background-color: #e0e5ea;
+    background-color: #eeeeee;
     padding: 8px 10px;
     cursor: pointer;
     border: 0;
@@ -279,6 +293,9 @@ body {
 .tab--active {
     color: white;
     background-color: black;
+    &:first-child {
+        border-radius: 0 0 0 10px;
+    }
 }
 
 .like {
@@ -297,4 +314,9 @@ body {
 
 .city-name_page2 {
     margin-left: 15px;
+}
+
+.added-location-title {
+    font-weight: 400;
+    font-size: 28px;
 }
