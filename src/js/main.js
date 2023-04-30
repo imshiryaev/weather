@@ -158,7 +158,6 @@ function createElement(newCity) {
     li.append(button);
 
     const img = document.createElement('img');
-
     img.alt = 'delete';
     img.width = '18';
     img.height = '18';
