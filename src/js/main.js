@@ -1,6 +1,8 @@
 import { format } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 import { cityName, getCityName, weatherFetch } from "/src/js/fetch.js";
 import { searchInput, degreesValue, cityNameHtml, weatherDegreeHtml, likeHtml, favoritelocationLists, weatherFeels, weatherWeather, weatherSunrise, weatherSunset, weatherInfo } from "/src/js/vars.js";
+
 export { changeDetails, changeCity };
 
 
@@ -22,7 +24,7 @@ function checkLocalStorage() {
 
 window.onload = function onLoad() {
     citySet.forEach((newCity) => render(newCity));
-}
+};
 
 checkLocalStorage();
 
@@ -31,29 +33,35 @@ searchInput.addEventListener('keyup', function (event) {
     if (event.code === 'Enter' && searchInput.value !== '') {
         event.preventDefault();
         getCityName();
+        clearInput();
         weatherFetch(cityName);
         weatherInfo.classList.remove('display-none');
     }
 });
 
-function changeDetails(resultFetch) {
-    degreesValue.textContent = `${Math.floor(resultFetch.main.temp)}`;
+function clearInput() {
+    searchInput.value = '';
+    searchInput.focus();
+
+}
+
+function changeDetails(data) {
+    degreesValue.textContent = `${Math.floor(data.main.temp)}`;
     degreesValue.insertAdjacentHTML('beforeend', '<span>&deg;</span>');
     const degreesResult = degreesValue.textContent;
     weatherDegreeHtml.textContent = degreesResult;
 
-    weatherFeels.textContent = resultFetch.main.feels_like;
-    weatherWeather.textContent = resultFetch.weather[0].main;
+    weatherFeels.textContent = data.main.feels_like;
+    weatherWeather.textContent = data.weather[0].main;
 
 
-    const unixSunrise = resultFetch.sys.sunrise;
-    const sunrise = new Date((unixSunrise + resultFetch.timezone) * 1000);
-    console.log(sunrise)
-    const sunriseTime = format(sunrise, 'HH:mm',);
+    const unixSunrise = ((data.sys.sunrise + data.timezone) * 1000);
+    const sunriseTime = format(utcToZonedTime(new Date(unixSunrise)), 'HH:mm',);
 
-    const unixSunset = resultFetch.sys.sunset;
-    const sunset = new Date((unixSunset + resultFetch.timezone) * 1000);
-    const sunsetTime = format(sunset, 'HH:mm',);
+    const unixSunset = ((data.sys.sunset + data.timezone) * 1000);
+    const sunsetTime = format(utcToZonedTime(new Date(unixSunset)), 'HH:mm',);
+
+
     weatherSunrise.textContent = sunriseTime;
     weatherSunset.textContent = sunsetTime;
 }
