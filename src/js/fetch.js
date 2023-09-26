@@ -18,7 +18,6 @@ async function weatherFetch(cityName) {
     const sendFetch = await fetch(url);
     data = await sendFetch.json();
 
-
     changeDetails(data);
     changeCity(cityName);
 }
